@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import styles from './home-header.module.css';
 import SearchInput from '../search-input';
 
