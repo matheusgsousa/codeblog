@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  background-color: var(--dark-20);
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+.container h1 {
+  font-family: var(--font-space-grotesk);
+  font-weight: 500;
+  font-size: 40px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+@media screen and (max-width: 1024px) {
+  .container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}

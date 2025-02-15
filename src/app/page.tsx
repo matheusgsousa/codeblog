@@ -1,95 +1,54 @@
-import Image from 'next/image';
+'use client';
+import { useState } from 'react';
+import ContentContainer from './components/content-container';
+import HomeHeader from './components/home-header';
 import styles from './page.module.css';
 
+const mockData = [
+  {
+    data: '17 de ago, 2025',
+    titulo: 'O que é linguagem de programação? Conheça as principais',
+    conteudo:
+      'Uma das mais populares vertentes da tecnologia da informação, a área de programação segue tendo muita demanda de trabalho justamente pela velocidade com que dispositivos tecnológicos vêm avançando.',
+  },
+  {
+    data: '12 de jul, 2025',
+    titulo: 'GitHub agora permite fazer login sem precisar de senha',
+    conteudo:
+      'O GitHub anunciou nesta quarta-feira (12) o acesso a partir das passkeys, método de autenticação sem senhas. A novidade está disponível em uma versão beta pública e pode substituir a autenticação em dois fatores.',
+  },
+  {
+    data: '21 de jun, 2025',
+    titulo: 'Por que os hiperlinks são azuis em sua maioria?',
+    conteudo:
+      'Quem navega na internet, certamente já percebeu que ela conta com diversos recursos para tornar a nossa vida mais fácil. Entre essas opções podemos mencionar os hiperlinks – uma palavra ou termo clicável que direciona o leitor.',
+  },
+];
+
 export default function Home() {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredData = mockData.filter(
+    (item) =>
+      item.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.conteudo.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      <header>
+        <HomeHeader onSearch={setSearchTerm} />
+      </header>
+      <section className={styles.blogContainer}>
+        {filteredData.map((item, index) => (
+          <article key={index} className={styles.blogContent}>
+            <ContentContainer
+              data={item.data}
+              titulo={item.titulo}
+              conteudo={item.conteudo}
             />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          </article>
+        ))}
+      </section>
     </div>
   );
 }
